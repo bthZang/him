@@ -19,10 +19,10 @@ export default function FeelingWheel() {
   const dragging = useRef(false);
   const lastY = useRef(0);
 
-  const START_BOUND = 135;
-  const END_BOUND = 235;
-  const SLICE_WIDTH = 20;
-  const RADIUS_INNER = 120;
+  const START_BOUND = 60;
+  const END_BOUND = 265;
+  const SLICE_WIDTH = 30;
+  const RADIUS_INNER = 80;
   const RADIUS_OUTER = 180;
 
   const totalAngle = FEELINGS.length * SLICE_WIDTH;
