@@ -1,6 +1,11 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 
+type FeelingWheelProps = {
+  selected: string | null;
+  onSelect: (id: string) => void;
+};
+
 const FEELINGS = [
   "Tức giận",
   "Bình yên",
@@ -14,7 +19,10 @@ const FEELINGS = [
   "Thanh thản",
 ];
 
-export default function FeelingWheel() {
+export default function FeelingWheel({
+  selected,
+  onSelect,
+}: FeelingWheelProps) {
   const [rotation, setRotation] = useState(0);
   const dragging = useRef(false);
   const lastY = useRef(0);
@@ -113,25 +121,29 @@ export default function FeelingWheel() {
           const labelY =
             Math.sin(labelAngle) * ((RADIUS_INNER + RADIUS_OUTER) / 2);
 
+          const isSelected = selected === label;
+
           return (
             <motion.g
               key={label}
               animate={{ opacity }}
               transition={{ duration: 0.2 }}
+              onClick={() => onSelect(label)} // chọn cảm xúc
+              style={{ cursor: "pointer" }}
             >
               <path
                 d={path}
-                fill="url(#grad)"
-                stroke="rgba(255,255,255,0.15)"
+                fill={isSelected ? "#3B82F6" : "url(#grad)"}
+                stroke={isSelected ? "#93C5FD" : "rgba(255,255,255,0.15)"}
                 strokeWidth="1"
               />
               <text
                 x={labelX}
                 y={labelY + 5}
                 textAnchor="middle"
-                fill="white"
+                fill={isSelected ? "#fff" : "#ccc"}
                 fontSize="12"
-                fontWeight="600"
+                fontWeight={isSelected ? "700" : "600"}
               >
                 {label}
               </text>
