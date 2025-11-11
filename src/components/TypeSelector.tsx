@@ -1,5 +1,3 @@
-import React from "react";
-
 interface TypeSelectorProps {
   selected: string | null;
   onSelect: (type: string) => void;
