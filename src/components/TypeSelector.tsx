@@ -1,6 +1,9 @@
+import React from "react";
+
 interface TypeSelectorProps {
   selected: string | null;
   onSelect: (type: string) => void;
+  disabled?: boolean;
 }
 
 const TYPES = [
@@ -29,29 +32,60 @@ const TYPES = [
 export default function TypeSelector({
   selected,
   onSelect,
+  disabled = false,
 }: TypeSelectorProps) {
   return (
-    <div className="flex flex-wrap justify-center gap-4 mt-2">
-      {TYPES.map((t) => (
-        <div
-          key={t.id}
-          onClick={() => onSelect(t.id)}
-          className={`relative w-20 h-32 rounded-xl shadow-md overflow-hidden cursor-pointer transform transition-all duration-300 ${
-            selected === t.id
-              ? "scale-105 shadow-[0_0_15px_rgba(100,200,255,0.7)]"
-              : "hover:scale-105 hover:shadow-[0_0_10px_rgba(255,255,255,0.2)]"
-          }`}
-          style={{
-            backgroundImage: `${t.bg}`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white font-semibold text-xs uppercase">
-            {t.label}
+    <div
+      className={`
+        relative -mt-[300px] ml-[300px] w-[420px] h-[160px]
+        flex items-center gap-3 overflow-x-auto overflow-y-hidden
+        snap-x snap-mandatory scrollbar-hide px-3 z-[999999]
+        transition-all duration-300
+        ${disabled ? "opacity-30 grayscale pointer-events-none" : ""}
+      `}
+    >
+      {TYPES.map((t) => {
+        const isSelected = selected === t.id;
+        const isDisabled = selected !== null && !isSelected;
+
+        return (
+          <div
+            key={t.id}
+            onClick={() => {
+              if (!disabled && !isDisabled) onSelect(t.id);
+            }}
+            className={`
+              relative min-w-[100px] h-[60px] rounded-xl shadow-xl overflow-hidden
+              shrink-0 transform transition-all duration-300 snap-start cursor-pointer
+              ${
+                isSelected
+                  ? "scale-110 shadow-[0_0_20px_rgba(100,200,255,0.8)] border border-sky-400"
+                  : isDisabled
+                  ? "opacity-40 grayscale cursor-not-allowed"
+                  : "hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)]"
+              }
+            `}
+            style={{
+              backgroundImage: t.bg,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            <div
+              className={`
+                absolute inset-0 flex items-center justify-center font-bold text-sm uppercase tracking-wide transition-all duration-300
+                ${
+                  isSelected
+                    ? "bg-black/20 text-sky-50"
+                    : "bg-black/50 text-white"
+                }
+              `}
+            >
+              {t.label}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
