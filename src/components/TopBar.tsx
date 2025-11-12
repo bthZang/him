@@ -3,7 +3,7 @@ import WeatherBar from "./WeatherBar";
 export default function TopBar() {
   return (
     <div className="w-full relative py-4 flex flex-col items-center">
-      <div className="absolute left-4 top-3 scale-50 origin-top-left">
+      <div className="absolute left-4 top-3 scale-[55%] origin-top-left">
         <WeatherBar />
       </div>
 
