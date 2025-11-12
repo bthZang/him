@@ -27,11 +27,11 @@ export default function FeelingWheel({
   const dragging = useRef(false);
   const lastY = useRef(0);
 
-  const START_BOUND = 60;
-  const END_BOUND = 265;
+  const START_BOUND = 80;
+  const END_BOUND = 260;
   const SLICE_WIDTH = 30;
-  const RADIUS_INNER = 80;
-  const RADIUS_OUTER = 180;
+  const RADIUS_INNER = 60;
+  const RADIUS_OUTER = 150;
 
   const totalAngle = FEELINGS.length * SLICE_WIDTH;
   const visibleRange = END_BOUND - START_BOUND;
@@ -55,7 +55,7 @@ export default function FeelingWheel({
   const handlePointerDown = (e: React.PointerEvent) => {
     dragging.current = true;
     lastY.current = e.clientY;
-    e.preventDefault(); 
+    e.preventDefault();
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
@@ -76,21 +76,34 @@ export default function FeelingWheel({
 
   return (
     <div
-      className="flex justify-center items-center w-full h-[400px] select-none touch-none "
+      className="flex justify-center items-center w-full h-[320px] select-none touch-none bg-transparent"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerLeave={handlePointerUp}
     >
-      <svg width="400" height="400" viewBox="-200 -200 400 400">
+      <svg width="360" height="320" viewBox="-180 -160 360 320">
+        <defs>
+          <radialGradient id="fadeCenter" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.12)" />
+            <stop offset="100%" stopColor="transparent" />
+          </radialGradient>
+
+          <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
         <circle
           cx="0"
           cy="0"
           r={RADIUS_OUTER}
-          fill="none"
-          stroke="#555"
-          strokeDasharray="4 6"
-          opacity="0.2"
+          fill="url(#fadeCenter)"
+          strokeWidth="1.2"
         />
 
         {FEELINGS.map((label, i) => {
@@ -117,48 +130,76 @@ export default function FeelingWheel({
             baseAngle - SLICE_WIDTH / 2,
             baseAngle + SLICE_WIDTH / 2
           );
-          const labelAngle = (baseAngle * Math.PI) / 180;
-          const labelX =
-            Math.cos(labelAngle) * ((RADIUS_INNER + RADIUS_OUTER) / 2);
-          const labelY =
-            Math.sin(labelAngle) * ((RADIUS_INNER + RADIUS_OUTER) / 2);
-
           const isSelected = selected === label;
+          const arcId = `arc-${label.replace(/\s/g, "")}`;
+          const arcRadius = RADIUS_OUTER - 20;
+          const arcAngle = 13;
 
           return (
             <motion.g
               key={label}
-              animate={{ opacity }}
-              transition={{ duration: 0.2 }}
+              animate={{
+                opacity,
+                scale: isSelected ? 1.05 : 1,
+              }}
+              transition={{ duration: 0.25 }}
               onClick={() => onSelect(label)}
               style={{ cursor: "pointer", touchAction: "none" }}
             >
-              <path
+              <motion.path
                 d={path}
-                fill={isSelected ? "#3B82F6" : "url(#grad)"}
-                stroke={isSelected ? "#93C5FD" : "rgba(255,255,255,0.15)"}
-                strokeWidth="1"
+                fill="transparent"
+                stroke={
+                  isSelected
+                    ? "rgba(255,255,255,0.95)"
+                    : "rgba(255,255,255,0.45)"
+                }
+                strokeWidth={isSelected ? "1.8" : "1.4"}
+                filter={isSelected ? "url(#softGlow)" : "none"}
               />
-              <text
-                x={labelX}
-                y={labelY + 5}
-                textAnchor="middle"
-                fill={isSelected ? "#fff" : "#ccc"}
-                fontSize="12"
-                fontWeight={isSelected ? "700" : "600"}
+
+              <path
+                id={arcId}
+                d={`
+                  M ${
+                    Math.cos(((baseAngle - arcAngle) * Math.PI) / 180) *
+                    arcRadius
+                  } ${
+                  Math.sin(((baseAngle - arcAngle) * Math.PI) / 180) * arcRadius
+                }
+                  A ${arcRadius} ${arcRadius} 0 0 1 ${
+                  Math.cos(((baseAngle + arcAngle) * Math.PI) / 180) * arcRadius
+                } ${
+                  Math.sin(((baseAngle + arcAngle) * Math.PI) / 180) * arcRadius
+                }
+                `}
+                fill="none"
+              />
+
+              <motion.text
+                fill={isSelected ? "#ffffff" : "rgba(255,255,255,0.8)"}
+                fontSize="10"
+                fontFamily="'Quicksand', 'Poppins', sans-serif"
+                fontWeight={isSelected ? "600" : "400"}
+                letterSpacing="0.3px"
+                animate={{
+                  textShadow: isSelected
+                    ? "0px 0px 8px rgba(255,255,255,0.9)"
+                    : "none",
+                }}
+                transition={{ duration: 0.25 }}
               >
-                {label}
-              </text>
+                <textPath
+                  href={`#${arcId}`}
+                  startOffset="50%"
+                  textAnchor="middle"
+                >
+                  {label}
+                </textPath>
+              </motion.text>
             </motion.g>
           );
         })}
-
-        <defs>
-          <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#3B82F6" />
-            <stop offset="100%" stopColor="#1E40AF" />
-          </linearGradient>
-        </defs>
       </svg>
     </div>
   );
