@@ -153,9 +153,6 @@ export default function FeelingWheel({
           );
         })}
 
-        <circle cx="0" cy="0" r="20" fill="#1e3a8a" opacity="0.6" />
-        <circle cx="0" cy="0" r="6" fill="#60a5fa" />
-
         <defs>
           <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#3B82F6" />
