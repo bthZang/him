@@ -1,26 +1,28 @@
-import { useEffect, useState } from "react";
+import ReactAnimatedWeather from "react-animated-weather";
 
 export default function WeatherBar() {
-  const [temp, setTemp] = useState<number | null>(null);
+  const weather = "RAIN";
 
-  useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const res = await fetch(
-          "https://api.open-meteo.com/v1/forecast?latitude=10.75&longitude=106.67&current=temperature_2m"
-        );
-        const data = await res.json();
-        setTemp(data.current.temperature_2m);
-      } catch {
-        setTemp(31);
-      }
-    };
-    fetchWeather();
-  }, []);
+  const weatherMap: Record<string, string> = {
+    CLEAR_DAY: "Trời nắng",
+    CLOUDY: "Có mây",
+    RAIN: "Mưa nhẹ",
+    SNOW: "Tuyết",
+    WIND: "Gió mạnh",
+    FOG: "Sương mù",
+  };
 
   return (
-    <div className="text-sky-200 text-sm mt-1 flex justify-center items-center gap-2">
-      <span>🌤 SG:</span> {temp ? `${temp.toFixed(1)}°C` : "..."}
+    <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm shadow-md">
+      <ReactAnimatedWeather
+        icon={weather}
+        color="#FFD93D"
+        size={40}
+        animate={true}
+      />
+      <span className="text-sky-50 text-sm font-medium">
+        27°C – {weatherMap[weather]}
+      </span>
     </div>
   );
 }
