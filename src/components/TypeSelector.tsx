@@ -48,13 +48,12 @@ export default function TypeSelector({
     >
       {TYPES.map((t) => {
         const isSelected = selected === t.id;
-        const isDisabled = selected !== null && !isSelected;
 
         return (
           <div
             key={t.id}
             onClick={() => {
-              if (!disabled && !isDisabled) onSelect(t.id);
+              if (!disabled) onSelect(t.id);
             }}
             className={`
               relative min-w-[100px] h-[60px] rounded-xl shadow-xl overflow-hidden
@@ -62,9 +61,7 @@ export default function TypeSelector({
               ${
                 isSelected
                   ? "scale-110 shadow-[0_0_20px_rgba(100,200,255,0.8)] border border-sky-400"
-                  : isDisabled
-                  ? "opacity-40 grayscale cursor-not-allowed"
-                  : "hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)]"
+                  : "opacity-80 hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)]"
               }
             `}
             style={{
@@ -91,3 +88,4 @@ export default function TypeSelector({
     </div>
   );
 }
+
