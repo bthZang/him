@@ -22,34 +22,54 @@ export default function App() {
     }
   };
 
-  const readyToShow = selectedFeeling && selectedType; // chọn đủ 2 cái thì nút sáng
+  const readyToShow = selectedFeeling && selectedType;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between bg-gradient-to-br from-[#0a2247] to-[#183c73] text-sky-50 relative overflow-hidden">
+    <div
+      className="
+        min-h-screen flex flex-col items-center justify-between 
+        bg-gradient-to-br from-[#0a2247] to-[#183c73] 
+        text-sky-50 relative overflow-hidden
+      "
+    >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(70,120,250,0.2),transparent_70%)]" />
-
       <TopBar />
 
-      <div className="flex flex-col items-center justify-center flex-1 gap-8 relative z-10">
-        <FeelingWheel
-          selected={selectedFeeling}
-          onSelect={(id) => {
-            setSelectedFeeling(id);
-            setSelectedType(null); 
-          }}
-        />
+      <div className="flex flex-col items-center justify-center flex-1 gap-8 relative z-10 w-full">
+        <div className="relative flex items-center justify-center w-full">
+          <div className="relative z-10">
+            <FeelingWheel
+              selected={selectedFeeling}
+              onSelect={(id) => {
+                setSelectedFeeling(id);
+                setSelectedType(null);
+              }}
+            />
+          </div>
 
-        <TypeSelector
-          selected={selectedType}
-          onSelect={(t) => setSelectedType(t)}
-          disabled={!selectedFeeling} // disable khi chưa chọn feeling
-        />
+          <div
+            className="
+              absolute top-1/2 
+              left-[150px] 
+              w-[calc(250px)] 
+              flex justify-center
+              z-20
+            "
+          >
+            <TypeSelector
+              selected={selectedType}
+              onSelect={(t) => setSelectedType(t)}
+              disabled={!selectedFeeling}
+            />
+          </div>
+        </div>
 
         <button
           disabled={!readyToShow}
           onClick={handleShowContent}
           className={`
-            relative z-30 px-8 py-4 rounded-full mt-10 text-lg font-semibold transition-all shadow-lg backdrop-blur-sm
+            relative z-30 px-8 py-4 rounded-full mt-10 text-lg font-semibold 
+            transition-all shadow-lg backdrop-blur-sm
             ${
               readyToShow
                 ? "bg-white/20 hover:bg-white/30 text-white cursor-pointer"

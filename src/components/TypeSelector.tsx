@@ -35,9 +35,13 @@ export default function TypeSelector({
   return (
     <div
       className={`
-        relative -mt-[300px] ml-[300px] w-[420px] h-[160px]
-        flex items-center gap-3 overflow-x-auto overflow-y-hidden
-        snap-x snap-mandatory scrollbar-hide px-3 z-[999999]
+        absolute top-1/2 left-1/2 
+        -translate-x-1/2 translate-y-[-45px]
+        flex items-center gap-3 
+        w-[90%] max-w-[420px] h-[100px]
+        overflow-x-auto overflow-y-hidden
+        snap-x snap-mandatory scrollbar-hide px-3
+        z-50
         transition-all duration-300
         ${disabled ? "opacity-30 grayscale pointer-events-none" : ""}
       `}

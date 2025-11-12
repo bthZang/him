@@ -55,10 +55,12 @@ export default function FeelingWheel({
   const handlePointerDown = (e: React.PointerEvent) => {
     dragging.current = true;
     lastY.current = e.clientY;
+    e.preventDefault(); 
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
     if (!dragging.current) return;
+    e.preventDefault();
     const deltaY = e.clientY - lastY.current;
     lastY.current = e.clientY;
 
@@ -74,7 +76,7 @@ export default function FeelingWheel({
 
   return (
     <div
-      className="flex justify-center items-center w-full h-[400px] select-none"
+      className="flex justify-center items-center w-full h-[400px] select-none touch-none "
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
@@ -128,8 +130,8 @@ export default function FeelingWheel({
               key={label}
               animate={{ opacity }}
               transition={{ duration: 0.2 }}
-              onClick={() => onSelect(label)} // chọn cảm xúc
-              style={{ cursor: "pointer" }}
+              onClick={() => onSelect(label)}
+              style={{ cursor: "pointer", touchAction: "none" }}
             >
               <path
                 d={path}
