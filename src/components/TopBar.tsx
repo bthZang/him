@@ -1,16 +1,19 @@
 import { motion } from "framer-motion";
 import WeatherBar from "./WeatherBar";
+import SpecialDayButton from "./SpecialDayButton";
 
 export default function TopBar() {
   return (
     <div className="w-full relative px-10 pt-8 pb-4 select-none">
-      <div className="absolute left-4 top-3 scale-[55%] origin-top-left">
-        <WeatherBar />
+      <div className="absolute left-4 top-4 flex gap-20">
+        <div className="scale-[55%] origin-top-left ">
+          <WeatherBar />
+        </div>
+        <div className="origin-top-right -translate-y-1">
+          <SpecialDayButton />
+        </div>
       </div>
-
-      {/* Cụm tiêu đề nghiêng hẳn sang phải */}
       <div className="absolute right-10 top-16 flex flex-col items-end">
-        {/* Dòng 1 – liền mạch, mềm, rõ nét */}
         <motion.h1
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -29,7 +32,6 @@ export default function TopBar() {
           Inner Motion
         </motion.h1>
 
-        {/* Dòng 2 – siêu thin, sát dưới, căn phải */}
         <motion.h2
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}

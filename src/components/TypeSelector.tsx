@@ -5,26 +5,10 @@ interface TypeSelectorProps {
 }
 
 const TYPES = [
-  {
-    id: "quote",
-    label: "QUOTE",
-    bg: "url('https://images.unsplash.com/photo-1503264116251-35a269479413')",
-  },
-  {
-    id: "image",
-    label: "IMAGE",
-    bg: "url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e')",
-  },
-  {
-    id: "video",
-    label: "VIDEO",
-    bg: "url('https://images.unsplash.com/photo-1519389950473-47ba0277781c')",
-  },
-  {
-    id: "music",
-    label: "MUSIC",
-    bg: "url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4')",
-  },
+  { id: "quote", label: "QUOTE" },
+  { id: "image", label: "IMAGE" },
+  { id: "video", label: "VIDEO" },
+  { id: "music", label: "MUSIC" },
 ];
 
 export default function TypeSelector({
@@ -37,7 +21,7 @@ export default function TypeSelector({
       className={`
         absolute top-1/2 left-1/2 
         -translate-x-1/2 translate-y-[-45px]
-        flex items-center gap-3 
+        flex items-center gap-4 
         w-[90%] max-w-[420px] h-[100px]
         overflow-x-auto overflow-y-hidden
         snap-x snap-mandatory scrollbar-hide px-3
@@ -56,29 +40,52 @@ export default function TypeSelector({
               if (!disabled) onSelect(t.id);
             }}
             className={`
-              relative min-w-[100px] h-[60px] rounded-xl shadow-xl overflow-hidden
+              relative min-w-[110px] h-[70px] rounded-2xl overflow-hidden
+              flex items-center justify-center 
+              border border-sky-300/40 backdrop-blur-sm
               shrink-0 transform transition-all duration-300 snap-start cursor-pointer
               ${
                 isSelected
-                  ? "scale-110 shadow-[0_0_20px_rgba(100,200,255,0.8)] border border-sky-400"
-                  : "opacity-80 hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)]"
+                  ? "scale-110 border-sky-400 shadow-[0_0_25px_rgba(140,200,255,0.8)]"
+                  : "opacity-80 hover:scale-105 hover:shadow-[0_0_14px_rgba(255,255,255,0.2)]"
               }
             `}
             style={{
-              backgroundImage: t.bg,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              background:
+                "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.06), rgba(255,255,255,0.02))",
+              boxShadow: isSelected
+                ? "inset 0 0 20px rgba(140,200,255,0.4)"
+                : "inset 0 0 6px rgba(255,255,255,0.1)",
             }}
           >
             <div
               className={`
-                absolute inset-0 flex items-center justify-center font-bold text-sm uppercase tracking-wide transition-all duration-300
+                absolute inset-0 rounded-2xl pointer-events-none
+                transition-all duration-500
                 ${
                   isSelected
-                    ? "bg-black/20 text-sky-50"
-                    : "bg-black/50 text-white"
+                    ? "border border-sky-300/80 shadow-[0_0_25px_rgba(160,220,255,0.8)]"
+                    : "border border-sky-200/30"
                 }
               `}
+            />
+
+            {/* Text */}
+            <div
+              className={`
+                relative z-10 font-extrabold text-lg tracking-widest uppercase
+                transition-all duration-300 select-none
+                ${
+                  isSelected
+                    ? "text-transparent bg-clip-text bg-gradient-to-r from-sky-100 via-sky-200 to-white drop-shadow-[0_0_6px_rgba(180,220,255,0.6)]"
+                    : "text-sky-200/80"
+                }
+              `}
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontWeight: 200,
+                letterSpacing: "2px",
+              }}
             >
               {t.label}
             </div>
@@ -88,4 +95,3 @@ export default function TypeSelector({
     </div>
   );
 }
-
