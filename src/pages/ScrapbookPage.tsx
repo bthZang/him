@@ -3,15 +3,8 @@ import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X, FileText } from "lucide-react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { specialDays } from "../constants/specialDays";
-
-/**
- * ScrapbookPage (TypeScript-fixed)
- *
- * Fix: orientationOf returns explicit union type "vertical" | "horizontal"
- * and randomized is typed so TS knows the shape.
- */
 
 type ItemType = "image" | "video";
 type PopupKind = "inline" | "modal";
@@ -30,7 +23,6 @@ const DEMO_VIDEO = "https://www.w3schools.com/html/mov_bbb.mp4";
 
 export default function ScrapbookPage() {
   const { slug } = useParams();
-  const navigate = useNavigate();
 
   const day = useMemo(
     () => specialDays.find((s) => s.path.endsWith(slug || "")),
@@ -43,15 +35,15 @@ export default function ScrapbookPage() {
         id: 1,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?1`,
-        caption: "Khoảnh khắc 1",
-        note: "Ngày ấy trời yên lặng.",
+        caption: "Ảnh 1",
+        note: "Chúc anh luôn tinh tế, kinh tế và tử tế.",
         popupKind: "inline",
       },
       {
         id: 2,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?2`,
-        caption: "Khoảnh khắc 2",
+        caption: "Ảnh 2",
         note: "Nụ cười không phai.",
         popupKind: "modal",
       },
@@ -59,8 +51,8 @@ export default function ScrapbookPage() {
         id: 3,
         type: "video",
         src: DEMO_VIDEO,
-        caption: "Clip ngắn",
-        note: "Gửi cậu một đoạn clip.",
+        caption: "Clip 1",
+        note: "Hạnh phúc nhé.",
         popupKind: "inline",
       },
       {
@@ -124,21 +116,10 @@ export default function ScrapbookPage() {
   );
 
   const frameTypeOf = (index: number) => (index % 4) + 1;
-
-  // <-- fix: explicitly return union type so TS knows this is not arbitrary string
   const orientationOf = (index: number): "vertical" | "horizontal" =>
     index % 5 < 3 ? "vertical" : "horizontal";
 
-  // typed randomized so TS knows exact shape (orientation specifically)
-  const randomized: Array<
-    ScrapItem & {
-      rotate: number;
-      tx: number;
-      ty: number;
-      frameType: number;
-      orientation: "vertical" | "horizontal";
-    }
-  > = useMemo(
+  const randomized = useMemo(
     () =>
       ITEMS.map((it, i) => ({
         ...it,
@@ -192,11 +173,11 @@ export default function ScrapbookPage() {
               <ScrapCard
                 item={it}
                 index={idx}
-                onInlineToggle={(id) =>
+                onInlineToggle={(id: number) =>
                   setInlineOpenId((prev) => (prev === id ? null : id))
                 }
                 inlineOpenId={inlineOpenId}
-                onOpenModal={(item) => setModalOpenItem(item)}
+                onOpenModal={(item: ScrapItem) => setModalOpenItem(item)}
               />
             </div>
           ))}
@@ -210,45 +191,60 @@ export default function ScrapbookPage() {
             onOpenChange={(open) => !open && setModalOpenItem(null)}
           >
             <Dialog.Portal>
-              <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-              <Dialog.Content
-                className="fixed z-60 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-gray-900 rounded-2xl shadow-2xl p-4 max-w-xl w-[92%]"
-                onInteractOutside={() => setModalOpenItem(null)}
-              >
-                <div className="flex justify-end">
-                  <button
-                    onClick={() => setModalOpenItem(null)}
-                    className="p-1 rounded hover:bg-black/5 text-gray-700"
-                  >
-                    <X />
-                  </button>
-                </div>
+              {/* Overlay */}
+              <motion.div
+                className="fixed inset-0 bg-black/60 z-40"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              />
 
-                <div className="flex flex-col md:flex-row gap-4 items-start">
-                  <div className="flex-1">
-                    {modalOpenItem.type === "image" ? (
-                      <img
-                        src={modalOpenItem.src}
-                        alt={modalOpenItem.caption}
-                        className="w-full rounded"
-                      />
-                    ) : (
-                      <video
-                        src={modalOpenItem.src}
-                        controls
-                        className="w-full rounded"
-                      />
-                    )}
+              {/* ✅ Fixed centered modal */}
+              <Dialog.Content asChild forceMount>
+                <motion.div
+                  className="fixed inset-0 z-50 flex items-center justify-center"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                >
+                  <div className="bg-white text-gray-900 rounded-2xl shadow-2xl p-4 max-w-xl w-[92%]">
+                    <div className="flex justify-end">
+                      <button
+                        onClick={() => setModalOpenItem(null)}
+                        className="p-1 rounded hover:bg-black/5 text-gray-700"
+                      >
+                        <X />
+                      </button>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row gap-4 items-start">
+                      <div className="flex-1">
+                        {modalOpenItem.type === "image" ? (
+                          <img
+                            src={modalOpenItem.src}
+                            alt={modalOpenItem.caption}
+                            className="w-full rounded-lg object-cover"
+                          />
+                        ) : (
+                          <video
+                            src={modalOpenItem.src}
+                            controls
+                            className="w-full rounded-lg object-cover"
+                          />
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-medium mb-2">
+                          {modalOpenItem.caption}
+                        </h3>
+                        <p className="text-sm text-gray-700 leading-relaxed">
+                          {modalOpenItem.note}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-medium mb-2">
-                      {modalOpenItem.caption}
-                    </h3>
-                    <p className="text-sm text-gray-700 leading-relaxed">
-                      {modalOpenItem.note}
-                    </p>
-                  </div>
-                </div>
+                </motion.div>
               </Dialog.Content>
             </Dialog.Portal>
           </Dialog.Root>
@@ -259,25 +255,7 @@ export default function ScrapbookPage() {
 }
 
 /* ---------- ScrapCard ---------- */
-function ScrapCard({
-  item,
-  index,
-  onInlineToggle,
-  inlineOpenId,
-  onOpenModal,
-}: {
-  item: ScrapItem & {
-    rotate: number;
-    tx: number;
-    ty: number;
-    frameType: number;
-    orientation: "vertical" | "horizontal";
-  };
-  index: number;
-  onInlineToggle: (id: number) => void;
-  inlineOpenId: number | null;
-  onOpenModal: (it: ScrapItem) => void;
-}) {
+function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
   const isInlineOpen = inlineOpenId === item.id;
   const orientationClass =
     item.orientation === "vertical"
@@ -288,7 +266,7 @@ function ScrapCard({
     "relative rounded-lg overflow-hidden flex flex-col items-stretch justify-start transition-transform shadow-lg";
   const frameStyle =
     item.frameType === 1
-      ? `${baseFrameCommon} bg-gradient-to-br from-white/95 to-sky-50/60 border border-white/0`
+      ? `${baseFrameCommon} bg-gradient-to-br from-white/95 to-sky-50/60`
       : item.frameType === 2
       ? `${baseFrameCommon} bg-white/95 relative after:absolute after:inset-[6px] after:border-[3px] after:border-dashed after:border-sky-300 after:rounded-lg after:pointer-events-none`
       : item.frameType === 3
@@ -313,82 +291,83 @@ function ScrapCard({
           boxShadow: "0 8px 18px rgba(2,6,23,0.45)",
           ...(item.frameType === 3 ? { clipPath: jaggedClip } : {}),
         }}
+        onClick={() => {
+          item.popupKind === "modal"
+            ? onOpenModal(item)
+            : onInlineToggle(item.id);
+        }}
       >
-        <div className="flex-1 relative">
-          <div
-            className={`${
-              item.frameType === 2 ? "p-3" : "p-1"
-            } h-full flex items-center justify-center bg-transparent`}
-          >
-            {item.type === "image" ? (
-              <img
-                src={item.src}
-                alt={item.caption}
-                className="w-full h-full object-cover rounded-sm"
-              />
-            ) : (
-              <video
-                src={item.src}
-                className="w-full h-full object-cover"
-                muted
-                loop
-              />
-            )}
-          </div>
-
-          {item.frameType === 4 && (
-            <div className="absolute bottom-0 left-0 right-0 text-center pb-3 pt-2">
-              <div className="text-xs text-gray-600">{item.caption}</div>
-            </div>
+        <div className={`flex-1 ${item.frameType === 2 ? "p-3" : "p-1"}`}>
+          {item.type === "image" ? (
+            <img
+              src={item.src}
+              alt={item.caption}
+              className="w-full h-full object-cover rounded-sm"
+            />
+          ) : (
+            <video
+              src={item.src}
+              className="w-full h-full object-cover"
+              muted
+              loop
+            />
           )}
-
-          <div className="absolute top-3 right-3 flex items-center gap-2">
-            {item.popupKind === "inline" ? (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onInlineToggle(item.id);
-                }}
-                className="bg-white/95 text-gray-800 p-1 rounded-full shadow-sm border"
-                title="Open note"
-              >
-                <FileText className="w-4 h-4" />
-              </button>
-            ) : (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onOpenModal(item);
-                }}
-                className="bg-white/95 text-gray-800 px-2 py-1 rounded-md text-xs font-medium shadow-sm border"
-              >
-                {item.caption ?? "Preview"}
-              </button>
-            )}
-          </div>
-
-          <AnimatePresence>
-            {item.popupKind === "inline" && isInlineOpen && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.85, y: -6 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: -6 }}
-                transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                onClick={(e) => e.stopPropagation()}
-                className="absolute right-3 top-12 z-40 max-w-xs md:max-w-sm"
-              >
-                <div className="bg-yellow-50/95 text-gray-900 p-3 rounded-lg shadow-md border">
-                  <div className="flex items-start gap-2">
-                    <div className="p-1 rounded-md bg-white/90">
-                      <FileText className="w-4 h-4 text-gray-700" />
-                    </div>
-                    <div className="text-sm leading-relaxed">{item.note}</div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
+
+        {item.frameType === 4 && (
+          <div className="absolute bottom-0 left-0 right-0 text-center pb-3 pt-2">
+            <div className="text-xs text-gray-600">{item.caption}</div>
+          </div>
+        )}
+
+        {/* Nút mở note */}
+        <div className="absolute top-3 right-3 flex items-center gap-2">
+          {item.popupKind === "inline" ? (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onInlineToggle(item.id);
+              }}
+              className="bg-white/95 text-gray-800 p-1 rounded-full shadow-sm border"
+              title="Open note"
+            >
+              <FileText className="w-4 h-4" />
+            </button>
+          ) : (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenModal(item);
+              }}
+              className="bg-white/95 text-gray-800 px-2 py-1 rounded-md text-xs font-medium shadow-sm border"
+            >
+              {item.caption ?? "Preview"}
+            </button>
+          )}
+        </div>
+
+        {/* Inline note */}
+        <AnimatePresence>
+          {item.popupKind === "inline" && isInlineOpen && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85, y: -6 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -6 }}
+              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+              onClick={(e) => e.stopPropagation()}
+              className="absolute right-3 top-12 z-40 max-w-xs md:max-w-sm"
+            >
+              <div className="bg-yellow-50/95 text-gray-900 p-3 rounded-lg shadow-md border">
+                <div className="flex items-start gap-2">
+                  <div className="p-1 rounded-md bg-white/90">
+                    <FileText className="w-4 h-4 text-gray-700" />
+                  </div>
+                  <div className="text-sm leading-relaxed">{item.note}</div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </div>
   );
