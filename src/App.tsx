@@ -4,7 +4,6 @@ import FeelingWheel from "./components/FeelingWheel";
 import TypeSelector from "./components/TypeSelector";
 import TopBar from "./components/TopBar";
 import { resolveContent } from "./ruleEngine";
-import SpecialDayButton from "./components/SpecialDayButton"
 
 export default function App() {
   const [selectedFeeling, setSelectedFeeling] = useState<string | null>(null);
@@ -37,8 +36,8 @@ export default function App() {
       <TopBar />
 
       <div className="flex flex-col items-center justify-center flex-1 gap-8 relative z-10 w-full">
-        <div className="relative flex flex-col flex-1 gap-8 z-10 items-center justify-center w-full">
-          <div className="relative z-10">
+        <div className="relative flex-1 w-full flex items-center justify-center">
+          <div className="relative flex flex-col items-center justify-center">
             <FeelingWheel
               selected={selectedFeeling}
               onSelect={(id) => {
@@ -46,18 +45,33 @@ export default function App() {
                 setSelectedType(null);
               }}
             />
+
+            <button
+              disabled={!readyToShow}
+              onClick={handleShowContent}
+              className={`
+        mt-8 px-10 py-3 text-lg font-semibold 
+        transition-all shadow-md backdrop-blur-sm
+        border border-sky-300/30
+        ${
+          readyToShow
+            ? "bg-white/15 hover:bg-white/25 text-white cursor-pointer"
+            : "bg-white/5 text-white/40 cursor-not-allowed"
+        }
+        rounded-xl
+      `}
+            >
+              Xem nội dung ✨
+            </button>
           </div>
 
           <div
-            className="
-            absolute 
-            top-1/2
-            flex justify-center items-center
-            w-full
-            pointerevents-auto
-          "
+            className="absolute flex items-center"
             style={{
-              left: "calc(50%-130px)",
+              left: "calc(50% - 10px)",
+              right: "calc(5px)",
+              top: "calc(50% - 50px)",
+              transform: "translateY(-50%)",
             }}
           >
             <TypeSelector
@@ -67,22 +81,6 @@ export default function App() {
             />
           </div>
         </div>
-
-        <button
-          disabled={!readyToShow}
-          onClick={handleShowContent}
-          className={`
-            relative z-30 px-8 py-4 rounded-full mt-10 text-lg font-semibold 
-            transition-all shadow-lg backdrop-blur-sm
-            ${
-              readyToShow
-                ? "bg-white/20 hover:bg-white/30 text-white cursor-pointer"
-                : "bg-white/5 text-white/40 cursor-not-allowed"
-            }
-          `}
-        >
-          Xem nội dung ✨
-        </button>
       </div>
     </div>
   );

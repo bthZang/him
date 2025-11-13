@@ -77,3 +77,12 @@ body,
   box-shadow: 0 0 6px rgba(255, 100, 150, 0.6);
   pointer-events: none;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

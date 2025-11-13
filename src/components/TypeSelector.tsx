@@ -19,8 +19,6 @@ export default function TypeSelector({
   return (
     <div
       className={`
-        absolute top-1/2 left-1/2 
-        -translate-x-1/2 translate-y-[-45px]
         flex items-center gap-4 
         w-[90%] max-w-[420px] h-[100px]
         overflow-x-auto overflow-y-hidden
