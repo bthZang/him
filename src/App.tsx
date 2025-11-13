@@ -59,7 +59,7 @@ export default function App() {
             : "bg-white/5 text-white/40 cursor-not-allowed"
         }
         rounded-xl
-      `}
+        `}
             >
               Xem nội dung ✨
             </button>
