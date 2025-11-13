@@ -5,10 +5,9 @@ interface TypeSelectorProps {
 }
 
 const TYPES = [
-  { id: "quote", label: "QUOTE" },
-  { id: "image", label: "IMAGE" },
-  { id: "video", label: "VIDEO" },
-  { id: "music", label: "MUSIC" },
+  { id: "video", label: "watch" },
+  { id: "music", label: "listen" },
+  { id: "image", label: "whatever" },
 ];
 
 export default function TypeSelector({
@@ -40,19 +39,19 @@ export default function TypeSelector({
             className={`
               relative min-w-[110px] h-[70px] rounded-2xl overflow-hidden
               flex items-center justify-center 
-              border border-sky-300/40 backdrop-blur-sm
+              border backdrop-blur-sm
               shrink-0 transform transition-all duration-300 snap-start cursor-pointer
               ${
                 isSelected
-                  ? "scale-110 border-sky-400 shadow-[0_0_25px_rgba(140,200,255,0.8)]"
-                  : "opacity-80 hover:scale-105 hover:shadow-[0_0_14px_rgba(255,255,255,0.2)]"
+                  ? "scale-110 border-white/90 shadow-[0_0_25px_rgba(255,255,255,0.6)]"
+                  : "border-white/40 opacity-80 hover:scale-105 hover:shadow-[0_0_14px_rgba(255,255,255,0.3)]"
               }
             `}
             style={{
               background:
                 "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.06), rgba(255,255,255,0.02))",
               boxShadow: isSelected
-                ? "inset 0 0 20px rgba(140,200,255,0.4)"
+                ? "inset 0 0 20px rgba(255,255,255,0.3)"
                 : "inset 0 0 6px rgba(255,255,255,0.1)",
             }}
           >
@@ -62,8 +61,8 @@ export default function TypeSelector({
                 transition-all duration-500
                 ${
                   isSelected
-                    ? "border border-sky-300/80 shadow-[0_0_25px_rgba(160,220,255,0.8)]"
-                    : "border border-sky-200/30"
+                    ? "border border-white/80 shadow-[0_0_25px_rgba(255,255,255,0.7)]"
+                    : "border border-white/30"
                 }
               `}
             />
@@ -71,18 +70,17 @@ export default function TypeSelector({
             {/* Text */}
             <div
               className={`
-                relative z-10 font-extrabold text-lg tracking-widest uppercase
+                relative z-10 font-medium text-base tracking-wide uppercase
                 transition-all duration-300 select-none
                 ${
                   isSelected
-                    ? "text-transparent bg-clip-text bg-gradient-to-r from-sky-100 via-sky-200 to-white drop-shadow-[0_0_6px_rgba(180,220,255,0.6)]"
-                    : "text-sky-200/80"
+                    ? "text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-100 to-sky-200 drop-shadow-[0_0_5px_rgba(255,255,255,0.4)]"
+                    : "text-sky-100/80"
                 }
               `}
               style={{
                 fontFamily: "'Poppins', sans-serif",
-                fontWeight: 200,
-                letterSpacing: "2px",
+                letterSpacing: "1.5px",
               }}
             >
               {t.label}
