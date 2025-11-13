@@ -139,7 +139,7 @@ export default function ScrapbookPage() {
     <div
       className="min-h-screen w-full text-white"
       style={{
-        background: "linear-gradient(180deg,#0a2247 0%,#183c73 100%)",
+        background: "linear-gradient(#0b1f35)",
       }}
     >
       <div className="max-w-5xl mx-auto px-4 py-8">
@@ -159,7 +159,7 @@ export default function ScrapbookPage() {
               style={{ zIndex: 99999 }}
             >
               <div
-                className="w-3 h-5 rounded-full bg-gradient-to-t from-orange-500 via-amber-300 to-yellow-100 animate-flicker"
+                className="w-3 h-5 rounded-full bg-gradient-to-t from-orange-500 via-amber-300 to-yellow-100 animate-flicker z-[90999]"
                 style={{
                   filter:
                     "drop-shadow(0 0 8px rgba(255,200,120,0.9)) drop-shadow(0 0 10px rgba(255,150,50,0.7))",
