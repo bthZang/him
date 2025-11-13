@@ -4,8 +4,10 @@ import SpecialDayButton from "./SpecialDayButton";
 
 export default function TopBar() {
   return (
-    <header className="fixed top-0 left-0 w-full z- backdrop-blur-sm bg-transparent select-none">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-2 flex flex-col items-center">
+    <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-sm bg-transparent select-none">
+      <div className="absolute inset-0 backdrop-blur-sm -z-10" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-2 flex flex-col items-center relative z-10">
         <div className="w-full flex items-center justify-between">
           <div className="flex-shrink-0 scale-90 sm:scale-100">
             <WeatherBar />

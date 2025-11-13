@@ -4,6 +4,7 @@ import FeelingWheel from "./components/FeelingWheel";
 import TypeSelector from "./components/TypeSelector";
 import TopBar from "./components/TopBar";
 import { resolveContent } from "./ruleEngine";
+import SpecialDayButton from "./components/SpecialDayButton"
 
 export default function App() {
   const [selectedFeeling, setSelectedFeeling] = useState<string | null>(null);
@@ -36,7 +37,7 @@ export default function App() {
       <TopBar />
 
       <div className="flex flex-col items-center justify-center flex-1 gap-8 relative z-10 w-full">
-        <div className="relative flex items-center justify-center w-full">
+        <div className="relative flex flex-col flex-1 gap-8 z-10 items-center justify-center w-full">
           <div className="relative z-10">
             <FeelingWheel
               selected={selectedFeeling}
@@ -49,12 +50,15 @@ export default function App() {
 
           <div
             className="
-              absolute top-1/2 
-              left-[150px] 
-              w-[calc(250px)] 
-              flex justify-center
-              z-20
-            "
+            absolute 
+            top-1/2
+            flex justify-center items-center
+            w-full
+            pointerevents-auto
+          "
+            style={{
+              left: "calc(50%-130px)",
+            }}
           >
             <TypeSelector
               selected={selectedType}
