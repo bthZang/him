@@ -8,15 +8,12 @@ type FeelingWheelProps = {
 
 const FEELINGS = [
   "Tức giận",
-  "Bình yên",
-  "Hào hứng",
+  "Buồn",
+  "Tủi thân",
   "Cô đơn",
   "Mệt mỏi",
-  "Hi vọng",
-  "Hoài niệm",
-  "Biết ơn",
+  "Yên bình",
   "Chán",
-  "Thanh thản",
 ];
 
 export default function FeelingWheel({
