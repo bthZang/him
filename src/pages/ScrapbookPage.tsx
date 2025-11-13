@@ -147,23 +147,61 @@ export default function ScrapbookPage() {
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="relative flex flex-col items-center mb-10 "
         >
+          <div className="absolute inset-0 flex items-center justify-center text-[180px] font-bold text-[#bcd9f7]/20 select-none animate-22">
+            22
+          </div>
+
+          <div className="relative mb-6 z-[9999]">
+            <div
+              className="absolute -top-[45px] left-1/2 -translate-x-1/2 flex flex-col items-center scale-50 "
+              style={{ zIndex: 99999 }}
+            >
+              <div
+                className="w-3 h-5 rounded-full bg-gradient-to-t from-orange-500 via-amber-300 to-yellow-100 animate-flicker"
+                style={{
+                  filter:
+                    "drop-shadow(0 0 8px rgba(255,200,120,0.9)) drop-shadow(0 0 10px rgba(255,150,50,0.7))",
+                }}
+              ></div>
+              <div className="w-2.5 h-[40px] bg-gradient-to-t from-[#a3c8f0] to-[#d4e8fb] rounded-t-sm shadow-inner"></div>
+            </div>
+
+            <div className="w-28 h-12 bg-[#d4e8fb] rounded-t-xl border-4 border-[#a3c8f0] shadow-inner relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-4 bg-[#f7fbff] rounded-t-xl" />
+              <div className="absolute bottom-0 left-0 w-full h-2 bg-[#a3c8f0]/60" />
+            </div>
+
+            <div
+              className="absolute -top-4 left-1/2 -translate-x-1/2 w-16 h-10 rounded-full blur-xl opacity-60 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(255,180,100,0.7) 0%, rgba(255,180,100,0) 70%)",
+              }}
+            ></div>
+          </div>
+
           <motion.h1
-            className="text-3xl md:text-4xl font-extralight mb-1 text-transparent bg-clip-text"
+            className="text-3xl md:text-4xl font-light text-transparent bg-clip-text z-10"
             style={{
-              backgroundImage: "linear-gradient(90deg,#ffffff,#9be7ff,#62d0ff)",
+              backgroundImage:
+                "linear-gradient(90deg,#ffffff,#cfe7ff,#a3c8f0,#d4e8fb)",
               backgroundSize: "200% 200%",
               WebkitBackgroundClip: "text",
-              backgroundClip: "text",
             }}
-            animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+            animate={{
+              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+            }}
             transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
           >
-            🎂 {day?.label ?? "Special"} —{" "}
-            {day ? new Date(day.date).toLocaleDateString() : "13.11"}
+            🎂 Happy Birthday to <span className="font-semibold">Mus</span> —
+            26/9
           </motion.h1>
-          <div className="text-sm text-white/70 mb-6">
-            Scroll to see memories — tap to read notes
+
+          {/* Subtext */}
+          <div className="text-sm text-white/80 mt-2 z-10">
+            Scroll to see memories — tap to read notes 💌
           </div>
         </motion.div>
 
@@ -346,7 +384,6 @@ function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
           )}
         </div>
 
-        {/* Inline note */}
         <AnimatePresence>
           {item.popupKind === "inline" && isInlineOpen && (
             <motion.div
