@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import ContentPage from "./pages/ContentPage";
-import SpecialDayPage from "./pages/SpecialDayPage"; // 🔥 thêm dòng này
+import ScrapbookPage from "./pages/ScrapbookPage";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/content" element={<ContentPage />} />
-        <Route path="/special/:slug" element={<SpecialDayPage />} />{" "}
+        <Route path="/special/scrapbook" element={<ScrapbookPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

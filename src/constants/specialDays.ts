@@ -31,7 +31,7 @@ export const specialDays: SpecialDay[] = [
   {
     date: createLocalDate(2025, 11, 13),
     label: "Birthday",
-    path: "/special/missing",
+    path: "/special/scrapbook",
     content: {
       text: "Mọi người gửi lời chúc, còn mình chỉ muốn nghe cậu cười.",
       video: "/videos/birthday.mp4",
