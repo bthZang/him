@@ -3,8 +3,6 @@ import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X, FileText } from "lucide-react";
-import { useParams } from "react-router-dom";
-import { specialDays } from "../constants/specialDays";
 
 type ItemType = "image" | "video";
 type PopupKind = "inline" | "modal";
