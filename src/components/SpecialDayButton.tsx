@@ -30,14 +30,16 @@ export default function SpecialDayButton() {
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
         <motion.button
-          whileTap={{ scale: 0.9 }}
-          className="relative flex items-center justify-center p-2 rounded-md hover:bg-white/10 transition cursor-pointer"
+          whileHover={{ scale: 1.15, rotate: 5 }}
+          whileTap={{ scale: 0.9, rotate: -5 }}
+          transition={{ type: "spring", stiffness: 300, damping: 15 }}
+          className="relative flex items-center justify-center p-2 rounded-md hover:bg-white/10 active:bg-white/20 transition cursor-pointer"
         >
           <CalendarDays className="w-5 h-5 text-white" />
           {todaySpecial && (
             <motion.span
               layoutId="dot"
-              className="absolute -top-[2px] -right-[2px] h-2.5 w-2.5 rounded-full bg-pink-400 animate-pulse shadow-[0_0_6px_rgba(255,100,150,0.7)]"
+              className="absolute -top-[-3px] -right-[-3px] h-2.5 w-2.5 rounded-full bg-yellow-400 animate-pulse shadow-[0_0_6px_rgba(255,100,150,0.7)]"
             />
           )}
         </motion.button>
