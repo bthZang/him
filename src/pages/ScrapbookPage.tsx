@@ -22,13 +22,6 @@ const DEMO_PLACEHOLDER = "https://picsum.photos/800/1000";
 const DEMO_VIDEO = "https://www.w3schools.com/html/mov_bbb.mp4";
 
 export default function ScrapbookPage() {
-  const { slug } = useParams();
-
-  const day = useMemo(
-    () => specialDays.find((s) => s.path.endsWith(slug || "")),
-    [slug]
-  );
-
   const ITEMS: ScrapItem[] = useMemo(
     () => [
       {
