@@ -23,7 +23,7 @@ export const FEELINGS: Feeling[] = [
     contents: [],
   },
   {
-    id: "33",
+    id: "3",
     label: "Tức giận",
     contents: [],
   },

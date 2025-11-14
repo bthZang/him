@@ -196,7 +196,7 @@ export default function ContentPage() {
     <div className="min-h-screen w-full" style={{ background: "#07182A" }}>
       <div className="w-full max-w-5xl mx-auto px-4 py-8">
         <h1 className="text-center text-white text-xl mb-6">
-          Nội dung dành cho bạn 💙
+          Enjoyed 💙
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-20">
