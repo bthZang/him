@@ -83,6 +83,7 @@ export default function ScrapbookPage() {
 
   const ITEMS: ScrapItem[] = useMemo(() => {
     return [
+        //anh Duy
       mapped?.[2] ?? {
         id: 1,
         type: "image",
@@ -91,7 +92,8 @@ export default function ScrapbookPage() {
         note: "love from HG",
         popupKind: "inline",
       },
-      mapped?.[0] ?? {
+      //Loc
+      mapped?.[1] ?? {
         id: 2,
         type: "video",
         src: DEMO_VIDEO,
@@ -99,7 +101,8 @@ export default function ScrapbookPage() {
         note: "Video demo",
         popupKind: "inline",
       },
-      mapped?.[1] ?? {
+      //Nang
+      mapped?.[5] ?? {
         id: 3,
         type: "video",
         src: DEMO_VIDEO,
@@ -107,6 +110,7 @@ export default function ScrapbookPage() {
         note: "Video demo",
         popupKind: "inline",
       },
+      //Toan
       mapped?.[0] ?? {
         id: 4,
         type: "image",
@@ -115,7 +119,8 @@ export default function ScrapbookPage() {
         note: "sample 4",
         popupKind: "modal",
       },
-      mapped?.[0] ?? {
+      //Thuong
+      mapped?.[4] ?? {
         id: 5,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?5`,
@@ -123,7 +128,8 @@ export default function ScrapbookPage() {
         note: "sample 5",
         popupKind: "inline",
       },
-      mapped?.[0] ?? {
+      //Huu
+      mapped?.[3] ?? {
         id: 6,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?6`,
@@ -131,7 +137,8 @@ export default function ScrapbookPage() {
         note: "sample 6",
         popupKind: "modal",
       },
-      mapped?.[2] ?? {
+      //Khanh
+      mapped?.[7] ?? {
         id: 7,
         type: "video",
         src: DEMO_VIDEO,
@@ -139,7 +146,7 @@ export default function ScrapbookPage() {
         note: "Video demo",
         popupKind: "inline",
       },
-      mapped?.[0] ?? {
+      mapped?.[5] ?? {
         id: 8,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?8`,
@@ -147,7 +154,7 @@ export default function ScrapbookPage() {
         note: "sample 8",
         popupKind: "modal",
       },
-      mapped?.[0] ?? {
+      mapped?.[4] ?? {
         id: 9,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?9`,
@@ -155,7 +162,8 @@ export default function ScrapbookPage() {
         note: "sample 9",
         popupKind: "inline",
       },
-      mapped?.[0] ?? {
+      //Zang
+      mapped?.[6] ?? {
         id: 10,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?10`,
@@ -192,7 +200,10 @@ export default function ScrapbookPage() {
       style={{ background: "linear-gradient(#0b1f35)" }}
     >
       {/* HEADER */}
-      <div className="max-w-5xl mx-auto px-4 py-8">
+      <div
+        className="w-full max-w-[430px] mx-auto px-4 py-8 overflow-x-hidden"
+        style={{ background: "linear-gradient(#0b1f35)" }}
+      >
         <motion.div
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
