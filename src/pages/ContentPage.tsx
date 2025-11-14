@@ -35,7 +35,7 @@ export default function ContentPage() {
         className="mt-10 bg-white/10 hover:bg-white/20 px-6 py-3 rounded-full"
         onClick={() => navigate("/")}
       >
-        ⬅️ Quay lại
+        Quay lại
       </button>
     </div>
   );

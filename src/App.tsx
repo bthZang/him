@@ -61,7 +61,7 @@ export default function App() {
         rounded-xl
         `}
             >
-              Xem nội dung ✨
+              Xeam
             </button>
           </div>
 

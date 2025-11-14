@@ -1,9 +1,9 @@
 // src/feelings.ts
 
 export type ContentItem =
-  | { kind: "quote"; text: string }
-  | { kind: "image"; url: string; caption?: string }
-  | { kind: "video" | "music"; url: string; caption?: string };
+  | { kind: "watch"; url: string; caption?: string }
+  | { kind: "listen"; url: string; caption?: string }
+  | { kind: "whatever"; url: string; caption?: string };
 
 export type Feeling = {
   id: string;
@@ -13,60 +13,128 @@ export type Feeling = {
 
 export const FEELINGS: Feeling[] = [
   {
-    id: "happy",
-    label: "Vui",
+    id: "Chán",
+    label: "Chán",
     contents: [
-      { kind: "quote", text: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙" },
       {
-        kind: "music",
+        kind: "watch",
+        url: "",
+        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
+      },
+      {
+        kind: "listen",
         url: "https://www.youtube.com/embed/5qap5aO4i9A",
         caption: "Chill vibes 🎵",
       },
       {
-        kind: "image",
-        url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-        caption: "Bình minh thật đẹp ☀️",
+        kind: "whatever",
+        url: "https://www.youtube.com/embed/5qap5aO4i9A",
+        caption: "Chill vibes 🎵",
       },
     ],
   },
   {
-    id: "sad",
-    label: "Buồn",
+    id: "Tăng động",
+    label: "Tăng động",
     contents: [
       {
-        kind: "quote",
-        text: "Buồn cũng cần được lắng nghe, như một bài hát trầm 🎧",
+        kind: "watch",
+        url: "",
+        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
       },
       {
-        kind: "music",
-        url: "https://www.youtube.com/embed/lnM1QfZ1s8k",
-        caption: "Sad lofi",
+        kind: "listen",
+        url: "https://www.youtube.com/embed/5qap5aO4i9A",
+        caption: "Chill vibes 🎵",
+      },
+      {
+        kind: "whatever",
+        url: "https://www.youtube.com/embed/5qap5aO4i9A",
+        caption: "Chill vibes 🎵",
       },
     ],
   },
   {
-    id: "love",
-    label: "Yêu",
+    id: "Tức giận",
+    label: "Tức giận",
     contents: [
-      { kind: "quote", text: "Yêu là khi ta thấy mọi thứ đều đáng giá 💫" },
       {
-        kind: "image",
-        url: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e",
+        kind: "watch",
+        url: "",
+        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
+      },
+      {
+        kind: "listen",
+        url: "https://www.youtube.com/embed/5qap5aO4i9A",
+        caption: "Chill vibes 🎵",
+      },
+      {
+        kind: "whatever",
+        url: "https://www.youtube.com/embed/5qap5aO4i9A",
+        caption: "Chill vibes 🎵",
       },
     ],
   },
   {
-    id: "lonely",
+    id: "Tủi thân",
+    label: "Tủi thân",
+    contents: [
+      {
+        kind: "watch",
+        url: "",
+        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
+      },
+      {
+        kind: "listen",
+        url: "https://www.youtube.com/embed/5qap5aO4i9A",
+        caption: "Chill vibes 🎵",
+      },
+      {
+        kind: "whatever",
+        url: "https://www.youtube.com/embed/5qap5aO4i9A",
+        caption: "Chill vibes 🎵",
+      },
+    ],
+  },
+  {
+    id: "Cô đơn",
     label: "Cô đơn",
     contents: [
       {
-        kind: "quote",
-        text: "Cô đơn không đáng sợ, đáng sợ là không ai hiểu mình 🌙",
+        kind: "watch",
+        url: "",
+        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
       },
       {
-        kind: "music",
-        url: "https://www.youtube.com/embed/tgbNymZ7vqY",
-        caption: "Lonely night",
+        kind: "listen",
+        url: "https://www.youtube.com/embed/5qap5aO4i9A",
+        caption: "Chill vibes 🎵",
+      },
+      {
+        kind: "whatever",
+        url: "https://www.youtube.com/embed/5qap5aO4i9A",
+        caption: "Chill vibes 🎵",
+      },
+    ],
+  },
+  {
+    id: "Mệt mỏi",
+    label: "Mệt mỏi",
+    contents: [
+      {
+        kind: "watch",
+        url: "",
+        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
+      },
+      {
+        kind: "listen",
+        url: "https://www.youtube.com/embed/5qap5aO4i9A",
+        caption: "Chill vibes 🎵",
+      },
+      {
+        kind: "whatever",
+        url: "https://www.youtube.com/embed/5qap5aO4i9A",
+        caption: "Chill vibes 🎵",
       },
     ],
   },

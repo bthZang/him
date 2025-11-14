@@ -12,7 +12,7 @@ const FEELINGS = [
   "Tủi thân",
   "Cô đơn",
   "Mệt mỏi",
-  "Yên bình",
+  "Hào hứng",
   "Chán",
 ];
 
