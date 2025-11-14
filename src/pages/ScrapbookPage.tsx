@@ -193,7 +193,7 @@ export default function ScrapbookPage() {
       }}
     >
       <div
-        className="w-full max-w-[430px] mx-auto px-4 py-8 overflow-x-hidden"
+        className="w-full max-w-5xl mx-auto px-4 py-8 overflow-x-hidden"
         style={{ background: "linear-gradient(#0b1f35)" }}
       >
         <motion.div
