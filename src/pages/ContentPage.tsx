@@ -145,7 +145,7 @@ export default function ContentPage() {
     ] as const;
 
     const usedIds = new Set(mapped.map((m) => m.id));
-    return base.map((it, i) => {
+    return base.map((it) => {
       let id = it.id;
       while (usedIds.has(id)) id += 100;
 
