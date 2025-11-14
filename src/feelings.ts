@@ -15,149 +15,37 @@ export const FEELINGS: Feeling[] = [
   {
     id: "1",
     label: "Chán",
-    contents: [
-      {
-        kind: "watch",
-        url: "",
-        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
-      },
-      {
-        kind: "listen",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-      {
-        kind: "whatever",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-    ],
+    contents: [],
   },
   {
     id: "2",
     label: "Hào hứng",
-    contents: [
-      {
-        kind: "watch",
-        url: "",
-        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
-      },
-      {
-        kind: "listen",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-      {
-        kind: "whatever",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-    ],
+    contents: [],
   },
   {
     id: "33",
     label: "Tức giận",
-    contents: [
-      {
-        kind: "watch",
-        url: "",
-        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
-      },
-      {
-        kind: "listen",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-      {
-        kind: "whatever",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-    ],
+    contents: [],
   },
   {
     id: "4",
     label: "Tủi thân",
-    contents: [
-      {
-        kind: "watch",
-        url: "",
-        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
-      },
-      {
-        kind: "listen",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-      {
-        kind: "whatever",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-    ],
+    contents: [],
   },
   {
     id: "5",
     label: "Cô đơn",
-    contents: [
-      {
-        kind: "watch",
-        url: "",
-        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
-      },
-      {
-        kind: "listen",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-      {
-        kind: "whatever",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-    ],
+    contents: [],
   },
   {
     id: "6",
     label: "Mệt mỏi",
-    contents: [
-      {
-        kind: "watch",
-        url: "",
-        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
-      },
-      {
-        kind: "listen",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-      {
-        kind: "whatever",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-    ],
+    contents: [],
   },
   {
     id: "7",
     label: "Buồn",
-    contents: [
-      {
-        kind: "watch",
-        url: "",
-        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
-      },
-      {
-        kind: "listen",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-      {
-        kind: "whatever",
-        url: "https://www.youtube.com/embed/5qap5aO4i9A",
-        caption: "Chill vibes 🎵",
-      },
-    ],
+    contents: [],
   },
 ];
 

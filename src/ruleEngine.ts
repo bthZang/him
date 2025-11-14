@@ -83,7 +83,7 @@ function filterByType(
 
 export function surpriseMe(): { feelingId: string; type: string } {
   const rndFeeling = FEELINGS[Math.floor(Math.random() * FEELINGS.length)];
-  const types = ["quote", "image", "video", "music", "all"];
+  const types = ["watch", "listen", "whatever"];
   const rndType = types[Math.floor(Math.random() * types.length)];
   return { feelingId: rndFeeling.id, type: rndType };
 }

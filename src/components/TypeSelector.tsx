@@ -5,9 +5,9 @@ interface TypeSelectorProps {
 }
 
 const TYPES = [
-  { id: "video", label: "watch" },
-  { id: "music", label: "listen" },
-  { id: "image", label: "whatever" },
+  { id: "watch", label: "watch" },
+  { id: "listen", label: "listen" },
+  { id: "whatever", label: "whatever" },
 ];
 
 export default function TypeSelector({
