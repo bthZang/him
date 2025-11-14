@@ -38,7 +38,6 @@ function normalizeSrc(src: string) {
   if (src.includes(".mp4")) {
     return src.replace(/\s/g, "%20");
   }
-
   return src;
 }
 
