@@ -145,7 +145,17 @@ export default function ScrapbookPage() {
         note: "Video demo",
         popupKind: "inline",
       },
+      //Nang
       mapped?.[5] ?? {
+        id: 8,
+        type: "image",
+        src: `${DEMO_PLACEHOLDER}?8`,
+        caption: "Ảnh 8",
+        note: "sample 8",
+        popupKind: "modal",
+      },
+      //Nhu Khang
+      mapped?.[8] ?? {
         id: 8,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?8`,
