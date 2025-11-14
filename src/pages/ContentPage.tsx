@@ -34,28 +34,35 @@ function normalizeSrc(src?: string): string {
   if (src.includes("/embed/")) return src;
 
   try {
-    if (src.includes("youtube") || src.includes("youtu.be")) {
-      const vMatch = src.match(/[?&]v=([^&]+)/);
-      const shortMatch = src.match(/youtu\.be\/([^?&]+)/);
-      const id = vMatch?.[1] ?? shortMatch?.[1];
+    const url = new URL(src);
+
+    if (url.hostname.includes("youtube.com")) {
+      const id = url.searchParams.get("v");
+      if (id) return `https://www.youtube.com/embed/${id}`;
+    }
+
+    if (url.hostname.includes("youtu.be")) {
+      const id = url.pathname.replace("/", "");
       if (id) return `https://www.youtube.com/embed/${id}`;
     }
   } catch {}
 
-  if (src.includes(".mp4")) {
+  if (src.endsWith(".mp4")) {
     return src.replace(/\s/g, "%20");
   }
 
   return src;
 }
 
+
 export default function ContentPage() {
-  const { feeling, type } = useParams();
-  const feelingId = Number(feeling);
-  const contentType = type ?? "image";
+
+  const { feelingId, type } = useParams();
+  const feeling = Number(feelingId);
+  const contentType = type ?? "whatever";
 
   const { data: encryptedItems, error } = useEncryptedContent(
-    feelingId,
+    feeling,
     contentType
   );
 

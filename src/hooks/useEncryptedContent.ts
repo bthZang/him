@@ -7,12 +7,13 @@ export function useEncryptedContent(feelingId: number, type: string) {
 
   useEffect(() => {
     async function load() {
+
       try {
         if (!feelingId || !type) return;
 
         console.log("Loading encrypted:", feelingId, type);
 
-        const path = `/contents/feelings/${feelingId}/${type}.enc.json`;
+        const path = `/contents/feelings/${feelingId}.${type}.enc.json`;
 
         const res = await fetch(path);
         if (!res.ok) throw new Error(`File not found: ${path}`);
