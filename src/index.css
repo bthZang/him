@@ -63,21 +63,6 @@ body,
   color: white !important;
 }
 
-/* Ngày đặc biệt (vòng đỏ) */
-.special-day {
-  position: relative;
-}
-
-.special-day::before {
-  content: "";
-  position: absolute;
-  inset: 3px;
-  border: 2px solid rgba(255, 100, 150, 0.8);
-  border-radius: 50%;
-  box-shadow: 0 0 6px rgba(255, 100, 150, 0.6);
-  pointer-events: none;
-}
-
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -129,4 +114,22 @@ body,
 
 .animate-22 {
   animation: move22 6s ease-in-out infinite;
+}
+
+.special-day {
+  position: relative !important;
+}
+
+.special-day::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26px;
+  height: 26px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid #ff6363;
+  box-shadow: 0 0 6px rgba(255, 80, 80, 0.5);
+  pointer-events: none;
 }
