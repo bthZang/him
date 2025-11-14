@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/content" element={<ContentPage />} />
+        <Route path="/content/:feelingId/:type" element={<ContentPage />} />
         <Route path="/special/scrapbook" element={<ScrapbookPage />} />
       </Routes>
     </BrowserRouter>

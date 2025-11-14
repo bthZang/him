@@ -2,23 +2,34 @@
 import { FEELINGS, SPECIAL_DAYS } from "./feelings";
 import type { Feeling, ContentItem } from "./feelings";
 
-export type ResolvedContent = { feeling: Feeling; items: ContentItem[] };
+export type ResolvedContentItem = ContentItem & { index: number };
+export type ResolvedContent = {
+  feeling: Feeling;
+  items: ResolvedContentItem[];
+};
 
 export function getFeelingById(id?: string): Feeling | undefined {
   return FEELINGS.find((f) => f.id === id);
+}
+
+function attachIndex(items: ContentItem[]): ResolvedContentItem[] {
+  return items.map((item, index) => ({ ...item, index }));
 }
 
 export function checkSpecialDay(dateStr?: string): ResolvedContent | null {
   const d = dateStr || new Date().toISOString().slice(0, 10);
   const s = SPECIAL_DAYS[d];
   if (!s) return null;
+
   const feeling = getFeelingById(s.feelingId);
   if (!feeling) return null;
-  const items =
+
+  const rawItems =
     typeof s.contentIndex === "number"
       ? [feeling.contents[s.contentIndex]]
       : feeling.contents;
-  return { feeling, items };
+
+  return { feeling, items: attachIndex(rawItems) };
 }
 
 export function resolveContent(
@@ -42,15 +53,17 @@ export function resolveContent(
         aggregated.push(...f.contents);
       }
     });
+
     if (aggregated.length === 0) return null;
-    return { feeling: FEELINGS[0], items: aggregated };
+    return { feeling: FEELINGS[0], items: attachIndex(aggregated) };
   }
 
-  const items =
+  const rawItems =
     type && type !== "all"
       ? feeling.contents.filter((c) => c.kind === type)
       : feeling.contents;
-  return { feeling, items };
+
+  return { feeling, items: attachIndex(rawItems) };
 }
 
 function filterByType(
@@ -58,10 +71,13 @@ function filterByType(
   type?: string
 ): ResolvedContent {
   if (!type || type === "all") return resolved;
+
   const filtered = resolved.items.filter((c) => c.kind === type);
+  const items = filtered.length ? filtered : resolved.items;
+
   return {
     feeling: resolved.feeling,
-    items: filtered.length ? filtered : resolved.items,
+    items,
   };
 }
 

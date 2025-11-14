@@ -16,7 +16,7 @@ export default function App() {
       selectedType || undefined
     );
     if (resolved) {
-      navigate("/content", { state: { content: resolved } });
+      navigate(`/content/${selectedFeeling}/${selectedType}`);
     } else {
       alert("Không tìm thấy nội dung phù hợp 😢");
     }

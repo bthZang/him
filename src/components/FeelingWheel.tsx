@@ -1,20 +1,16 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
+import { FEELINGS as FEELING_DATA } from "../feelings";
 
 type FeelingWheelProps = {
   selected: string | null;
   onSelect: (id: string) => void;
 };
 
-const FEELINGS = [
-  "Tức giận",
-  "Buồn",
-  "Tủi thân",
-  "Cô đơn",
-  "Mệt mỏi",
-  "Hào hứng",
-  "Chán",
-];
+const FEELING_LIST = FEELING_DATA.map((f) => ({
+  id: f.id,
+  label: f.label,
+}));
 
 export default function FeelingWheel({
   selected,
@@ -30,7 +26,7 @@ export default function FeelingWheel({
   const RADIUS_INNER = 60;
   const RADIUS_OUTER = 150;
 
-  const totalAngle = FEELINGS.length * SLICE_WIDTH;
+  const totalAngle = FEELING_LIST.length * SLICE_WIDTH;
   const visibleRange = END_BOUND - START_BOUND;
   const minRotation = -(totalAngle / 2 - visibleRange / 2);
   const maxRotation = totalAngle / 2 - visibleRange / 2;
@@ -103,10 +99,13 @@ export default function FeelingWheel({
           strokeWidth="1.2"
         />
 
-        {FEELINGS.map((label, i) => {
+        {FEELING_LIST.map((f, i) => {
+          const label = f.label;
+          const id = f.id;
+
           const baseAngle =
             180 -
-            SLICE_WIDTH * Math.floor(FEELINGS.length / 2) +
+            SLICE_WIDTH * Math.floor(FEELING_LIST.length / 2) +
             i * SLICE_WIDTH +
             rotation;
 
@@ -127,20 +126,22 @@ export default function FeelingWheel({
             baseAngle - SLICE_WIDTH / 2,
             baseAngle + SLICE_WIDTH / 2
           );
-          const isSelected = selected === label;
-          const arcId = `arc-${label.replace(/\s/g, "")}`;
+
+          const isSelected = selected === id;
+
+          const arcId = `arc-${id.replace(/\s/g, "")}`;
           const arcRadius = RADIUS_OUTER - 20;
           const arcAngle = 13;
 
           return (
             <motion.g
-              key={label}
+              key={id}
               animate={{
                 opacity,
                 scale: isSelected ? 1.05 : 1,
               }}
               transition={{ duration: 0.25 }}
-              onClick={() => onSelect(label)}
+              onClick={() => onSelect(id)}
               style={{ cursor: "pointer", touchAction: "none" }}
             >
               <motion.path

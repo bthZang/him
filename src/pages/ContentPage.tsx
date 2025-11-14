@@ -1,42 +1,63 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import RenderItem from "../components/RenderItem";
+import { useLocation } from "react-router-dom";
+import { useMemo } from "react";
+import ContentCard from "../components/ContentCard";
+
+const DEMO_PLACEHOLDER = "https://picsum.photos/800/1000";
+const DEMO_VIDEO = "https://www.w3schools.com/html/mov_bbb.mp4";
+
+type ScrapItem = {
+  type: string;
+  src: string;
+  caption?: string;
+  frameType: number;
+  orientation: "vertical" | "horizontal";
+  rotate: number;
+  tx: number;
+  ty: number;
+};
 
 export default function ContentPage() {
   const location = useLocation();
-  const navigate = useNavigate();
+  const content = location.state?.content ?? [];
 
-  const content = location.state?.content;
+  const ITEMS = useMemo(() => {
+    let list = content;
 
-  if (!content) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#0a2247] text-white">
-        <p>Không tìm thấy nội dung phù hợp 😢</p>
-        <button
-          className="mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg"
-          onClick={() => navigate("/")}
-        >
-          Quay lại trang chính
-        </button>
-      </div>
-    );
-  }
+    if (!list || list.length === 0) {
+      list = [
+        { type: "image", src: `${DEMO_PLACEHOLDER}?1`, caption: "Love 1" },
+        { type: "image", src: `${DEMO_PLACEHOLDER}?2`, caption: "Love 2" },
+        { type: "image", src: `${DEMO_PLACEHOLDER}?3`, caption: "Love 3" },
+        { type: "image", src: `${DEMO_PLACEHOLDER}?4`, caption: "Love 4" },
+        { type: "image", src: `${DEMO_PLACEHOLDER}?5`, caption: "Love 5" },
+      ];
+    }
+
+    return list.map((item: any, i: number) => ({
+      ...item,
+      frameType: (i % 4) + 1,
+      orientation: i % 5 < 3 ? "vertical" : "horizontal",
+      rotate: (Math.random() - 0.5) * 6,
+      tx: (Math.random() - 0.5) * 10,
+      ty: (Math.random() - 0.5) * 8,
+    }));
+  }, [content]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-[#0a2247] to-[#183c73] text-sky-50 p-6">
-      <h1 className="text-2xl font-bold mb-6">{content.feeling.label} ✨</h1>
+    <div className="min-h-screen w-full" style={{ background: "#07182A" }}>
+      <div className="w-full max-w-5xl mx-auto px-4 py-8">
+        <h1 className="text-center text-white text-xl mb-6">
+          Nội dung dành cho bạn 💙
+        </h1>
 
-      <div className="flex flex-col gap-8 items-center">
-        {content.items.map((item: any, i: number) => (
-          <RenderItem key={i} item={item} />
-        ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-20">
+          {ITEMS.map((it: ScrapItem, idx: number) => (
+            <div key={idx} className="flex justify-center">
+              <ContentCard item={it} />
+            </div>
+          ))}
+        </div>
       </div>
-
-      <button
-        className="mt-10 bg-white/10 hover:bg-white/20 px-6 py-3 rounded-full"
-        onClick={() => navigate("/")}
-      >
-        Quay lại
-      </button>
     </div>
   );
 }

@@ -13,7 +13,7 @@ export type Feeling = {
 
 export const FEELINGS: Feeling[] = [
   {
-    id: "Chán",
+    id: "1",
     label: "Chán",
     contents: [
       {
@@ -34,8 +34,8 @@ export const FEELINGS: Feeling[] = [
     ],
   },
   {
-    id: "Tăng động",
-    label: "Tăng động",
+    id: "2",
+    label: "Hào hứng",
     contents: [
       {
         kind: "watch",
@@ -55,7 +55,7 @@ export const FEELINGS: Feeling[] = [
     ],
   },
   {
-    id: "Tức giận",
+    id: "33",
     label: "Tức giận",
     contents: [
       {
@@ -76,7 +76,7 @@ export const FEELINGS: Feeling[] = [
     ],
   },
   {
-    id: "Tủi thân",
+    id: "4",
     label: "Tủi thân",
     contents: [
       {
@@ -97,7 +97,7 @@ export const FEELINGS: Feeling[] = [
     ],
   },
   {
-    id: "Cô đơn",
+    id: "5",
     label: "Cô đơn",
     contents: [
       {
@@ -118,8 +118,29 @@ export const FEELINGS: Feeling[] = [
     ],
   },
   {
-    id: "Mệt mỏi",
+    id: "6",
     label: "Mệt mỏi",
+    contents: [
+      {
+        kind: "watch",
+        url: "",
+        caption: "Niềm vui là hạnh phúc nhỏ nhoi ghép lại 💙",
+      },
+      {
+        kind: "listen",
+        url: "https://www.youtube.com/embed/5qap5aO4i9A",
+        caption: "Chill vibes 🎵",
+      },
+      {
+        kind: "whatever",
+        url: "https://www.youtube.com/embed/5qap5aO4i9A",
+        caption: "Chill vibes 🎵",
+      },
+    ],
+  },
+  {
+    id: "7",
+    label: "Buồn",
     contents: [
       {
         kind: "watch",
