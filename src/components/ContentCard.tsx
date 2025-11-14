@@ -21,6 +21,11 @@ export default function ContentCard({ item }: any) {
   const jaggedClip =
     "polygon(0% 4%,4% 0%,96% 0%,100% 4%,100% 92%,96% 100%,4% 100%,0% 92%)";
 
+  const isYouTube =
+    item.src.includes("youtube.com") ||
+    item.src.includes("youtu.be") ||
+    item.src.includes("/embed/");
+
   return (
     <motion.div
       whileHover={{ scale: 1.03 }}
@@ -32,16 +37,27 @@ export default function ContentCard({ item }: any) {
         ...(item.frameType === 3 ? { clipPath: jaggedClip } : {}),
       }}
     >
-      <div className={`flex-1 p-2`}>
-        {item.type === "image" ? (
+      <div className="flex-1 p-2 relative">
+        {item.type === "image" && (
           <img
             src={item.src}
             className="w-full h-full object-cover rounded-sm"
           />
-        ) : (
+        )}
+
+        {item.type === "video" && isYouTube && (
+          <iframe
+            src={item.src}
+            className="w-full h-full rounded-sm"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        )}
+
+        {item.type === "video" && !isYouTube && (
           <video
             src={item.src}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded-sm"
             muted
             playsInline
             controls
