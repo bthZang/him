@@ -33,14 +33,14 @@ function normalizeSrc(src: string) {
       if (id) return `https://www.youtube.com/embed/${id}`;
     }
   } catch (e) {
-    console.log("wrong type")  }
+    console.log("wrong type");
+  }
 
   if (src.includes(".mp4")) {
     return src.replace(/\s/g, "%20");
   }
   return src;
 }
-
 
 export default function ScrapbookPage() {
   const { data: encryptedItems } = useEncryptedData();
@@ -217,9 +217,7 @@ export default function ScrapbookPage() {
           </div>
 
           <div className="relative mb-6 z-[9999]">
-            <div
-              className="absolute -top-[45px] left-1/2 -translate-x-1/2 flex flex-col items-center scale-50"
-            >
+            <div className="absolute -top-[45px] left-1/2 -translate-x-1/2 flex flex-col items-center scale-50">
               <div
                 className="w-3 h-5 rounded-full bg-gradient-to-t from-orange-500 via-amber-300 to-yellow-100 animate-flicker z-[90999]"
                 style={{
