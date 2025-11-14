@@ -197,9 +197,10 @@ export default function ScrapbookPage() {
   return (
     <div
       className="min-h-screen w-full text-white"
-      style={{ background: "linear-gradient(#0b1f35)" }}
+      style={{
+        background: "linear-gradient(#0b1f35)",
+      }}
     >
-      {/* HEADER */}
       <div
         className="w-full max-w-[430px] mx-auto px-4 py-8 overflow-x-hidden"
         style={{ background: "linear-gradient(#0b1f35)" }}
@@ -410,7 +411,6 @@ function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
             : onInlineToggle(item.id);
         }}
       >
-        {/* MEDIA RENDER HERE */}
         <div className={`flex-1 ${item.frameType === 2 ? "p-3" : "p-1"}`}>
           {item.type === "image" ? (
             <img
@@ -443,14 +443,12 @@ function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
           )}
         </div>
 
-        {/* FRAME TYPE 4 caption */}
         {item.frameType === 4 && (
           <div className="absolute bottom-0 left-0 right-0 text-center pb-3 pt-2">
             <div className="text-xs text-gray-600">{item.caption}</div>
           </div>
         )}
 
-        {/* Note button */}
         <div className="absolute top-3 right-3 flex items-center gap-2">
           {item.popupKind === "inline" ? (
             <button
@@ -459,6 +457,7 @@ function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
                 onInlineToggle(item.id);
               }}
               className="bg-white/95 text-gray-800 p-1 rounded-full shadow-sm border"
+              title="Open note"
             >
               <FileText className="w-4 h-4" />
             </button>
@@ -468,7 +467,7 @@ function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
                 e.stopPropagation();
                 onOpenModal(item);
               }}
-              className="bg-white/95 text-gray-800 px-2 py-1 rounded-md text-xs shadow-sm border"
+              className="bg-white/95 text-gray-800 px-2 py-1 rounded-md text-xs font-medium shadow-sm border"
             >
               {item.caption ?? "Preview"}
             </button>
