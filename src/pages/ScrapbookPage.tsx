@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X, FileText } from "lucide-react";
+import { useEncryptedData } from "../hooks/useEncryptedData";
 
 type ItemType = "image" | "video";
 type PopupKind = "inline" | "modal";
@@ -19,82 +20,142 @@ type ScrapItem = {
 const DEMO_PLACEHOLDER = "https://picsum.photos/800/1000";
 const DEMO_VIDEO = "https://www.w3schools.com/html/mov_bbb.mp4";
 
+function normalizeSrc(src: string) {
+  if (!src) return src;
+
+  if (src.includes("/embed/")) return src;
+
+  try {
+    if (src.includes("youtube") || src.includes("youtu.be")) {
+      const vMatch = src.match(/[?&]v=([^&]+)/);
+      const shortMatch = src.match(/youtu\.be\/([^?&]+)/);
+      const id = vMatch?.[1] ?? shortMatch?.[1];
+      if (id) return `https://www.youtube.com/embed/${id}`;
+    }
+  } catch (e) {
+    console.log("wrong type")  }
+
+  if (src.includes(".mp4")) {
+    return src.replace(/\s/g, "%20");
+  }
+
+  return src;
+}
+
+
 export default function ScrapbookPage() {
-  const ITEMS: ScrapItem[] = useMemo(
-    () => [
-      {
+  const { data: encryptedItems } = useEncryptedData();
+  console.log("ENCRYPTED ITEMS RAW:", encryptedItems);
+
+  const mapped = useMemo<ScrapItem[] | null>(() => {
+    if (!encryptedItems) return null;
+
+    return encryptedItems.map((item: any, idx: number): ScrapItem => {
+      const normalized = normalizeSrc(item.src);
+
+      const detectedType =
+        item.type ??
+        (normalized.includes(".mp4") ||
+        normalized.includes("youtube") ||
+        normalized.includes("youtu.be") ||
+        normalized.includes("/embed/")
+          ? "video"
+          : "image");
+
+      console.log("type", detectedType);
+
+      console.log("DEBUG VIDEO:", {
+        original: item.src,
+        normalized,
+        type: detectedType,
+      });
+
+      return {
+        id: 100 + idx,
+        type: detectedType,
+        src: normalized,
+        caption: item.caption ?? `Love ${idx + 1}`,
+        note: item.note,
+        popupKind: item.popup ?? "inline",
+      };
+    });
+  }, [encryptedItems]);
+
+  const ITEMS: ScrapItem[] = useMemo(() => {
+    return [
+      mapped?.[2] ?? {
         id: 1,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?1`,
         caption: "Ảnh 1",
-        note: "Chúc anh luôn tinh tế, kinh tế và tử tế.",
+        note: "love from HG",
         popupKind: "inline",
       },
-      {
+      mapped?.[0] ?? {
         id: 2,
-        type: "image",
-        src: `${DEMO_PLACEHOLDER}?2`,
-        caption: "Ảnh 2",
-        note: "Nụ cười không phai.",
-        popupKind: "modal",
+        type: "video",
+        src: DEMO_VIDEO,
+        caption: "Demo video",
+        note: "Video demo",
+        popupKind: "inline",
       },
-      {
+      mapped?.[1] ?? {
         id: 3,
         type: "video",
         src: DEMO_VIDEO,
-        caption: "Clip 1",
-        note: "Hạnh phúc nhé.",
+        caption: "Demo video",
+        note: "Video demo",
         popupKind: "inline",
       },
-      {
+      mapped?.[0] ?? {
         id: 4,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?4`,
         caption: "Ảnh 4",
-        note: "Một chút nhớ.",
+        note: "sample 4",
         popupKind: "modal",
       },
-      {
+      mapped?.[0] ?? {
         id: 5,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?5`,
         caption: "Ảnh 5",
-        note: "Cảm ơn vì đã ở đó.",
+        note: "sample 5",
         popupKind: "inline",
       },
-      {
+      mapped?.[0] ?? {
         id: 6,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?6`,
         caption: "Ảnh 6",
-        note: "Lời chúc nhẹ.",
+        note: "sample 6",
         popupKind: "modal",
       },
-      {
+      mapped?.[2] ?? {
         id: 7,
         type: "video",
         src: DEMO_VIDEO,
-        caption: "Clip 2",
-        note: "Và ta đi qua.",
+        caption: "Demo video",
+        note: "Video demo",
         popupKind: "inline",
       },
-      {
+      mapped?.[0] ?? {
         id: 8,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?8`,
         caption: "Ảnh 8",
-        note: "Hồi ức nhỏ.",
+        note: "sample 8",
         popupKind: "modal",
       },
-      {
+      mapped?.[0] ?? {
         id: 9,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?9`,
         caption: "Ảnh 9",
-        note: "Một chút ấm.",
+        note: "sample 9",
         popupKind: "inline",
       },
-      {
+      mapped?.[0] ?? {
         id: 10,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?10`,
@@ -102,9 +163,8 @@ export default function ScrapbookPage() {
         note: "Ghi chú cuối.",
         popupKind: "modal",
       },
-    ],
-    []
-  );
+    ];
+  }, [mapped]);
 
   const frameTypeOf = (index: number) => (index % 4) + 1;
   const orientationOf = (index: number): "vertical" | "horizontal" =>
@@ -129,10 +189,9 @@ export default function ScrapbookPage() {
   return (
     <div
       className="min-h-screen w-full text-white"
-      style={{
-        background: "linear-gradient(#0b1f35)",
-      }}
+      style={{ background: "linear-gradient(#0b1f35)" }}
     >
+      {/* HEADER */}
       <div className="max-w-5xl mx-auto px-4 py-8">
         <motion.div
           initial={{ opacity: 0, y: -6 }}
@@ -146,7 +205,7 @@ export default function ScrapbookPage() {
 
           <div className="relative mb-6 z-[9999]">
             <div
-              className="absolute -top-[45px] left-1/2 -translate-x-1/2 flex flex-col items-center scale-50 "
+              className="absolute -top-[45px] left-1/2 -translate-x-1/2 flex flex-col items-center scale-50"
               style={{ zIndex: 99999 }}
             >
               <div
@@ -170,7 +229,7 @@ export default function ScrapbookPage() {
                 background:
                   "radial-gradient(circle, rgba(255,180,100,0.7) 0%, rgba(255,180,100,0) 70%)",
               }}
-            ></div>
+            />
           </div>
 
           <motion.h1
@@ -190,9 +249,8 @@ export default function ScrapbookPage() {
             26/9
           </motion.h1>
 
-          {/* Subtext */}
           <div className="text-sm text-white/80 mt-2 z-10">
-            Scroll to see memories — tap to read notes 💌
+            Scroll to see all the wishes — tap to feel the love. 💌
           </div>
         </motion.div>
 
@@ -220,7 +278,6 @@ export default function ScrapbookPage() {
             onOpenChange={(open) => !open && setModalOpenItem(null)}
           >
             <Dialog.Portal>
-              {/* Overlay */}
               <motion.div
                 className="fixed inset-0 bg-black/60 z-40"
                 initial={{ opacity: 0 }}
@@ -228,49 +285,63 @@ export default function ScrapbookPage() {
                 exit={{ opacity: 0 }}
               />
 
-              {/* ✅ Fixed centered modal */}
-              <Dialog.Content asChild forceMount>
+              <Dialog.Content
+                forceMount
+                className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              >
                 <motion.div
-                  className="fixed inset-0 z-50 flex items-center justify-center"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.25, ease: "easeOut" }}
+                  className="
+                    bg-white text-gray-900 rounded-2xl shadow-2xl 
+                    w-full max-w-xl 
+                    max-h-[90vh] 
+                    overflow-y-auto 
+                    px-4 pb-4 pt-0
+
+                    "
                 >
-                  <div className="bg-white text-gray-900 rounded-2xl shadow-2xl p-4 max-w-xl w-[92%]">
-                    <div className="flex justify-end">
-                      <button
-                        onClick={() => setModalOpenItem(null)}
-                        className="p-1 rounded hover:bg-black/5 text-gray-700"
-                      >
-                        <X />
-                      </button>
+                  <div className="flex justify-end sticky top-0 bg-white z-10 pb-2">
+                    <button
+                      onClick={() => setModalOpenItem(null)}
+                      className="p-1 rounded hover:bg-black/5 text-gray-700"
+                    >
+                      <X />
+                    </button>
+                  </div>
+
+                  <div className="flex flex-col md:flex-row gap-4 items-start">
+                    {/* MEDIA */}
+                    <div className="flex-1">
+                      {modalOpenItem.type === "image" ? (
+                        <img
+                          src={modalOpenItem.src}
+                          className="w-full rounded-lg"
+                        />
+                      ) : /youtu/.test(modalOpenItem.src) ? (
+                        <iframe
+                          src={modalOpenItem.src}
+                          className="w-full aspect-video rounded-lg"
+                          allowFullScreen
+                        />
+                      ) : (
+                        <video
+                          src={modalOpenItem.src}
+                          controls
+                          className="w-full rounded-lg"
+                        />
+                      )}
                     </div>
 
-                    <div className="flex flex-col md:flex-row gap-4 items-start">
-                      <div className="flex-1">
-                        {modalOpenItem.type === "image" ? (
-                          <img
-                            src={modalOpenItem.src}
-                            alt={modalOpenItem.caption}
-                            className="w-full rounded-lg object-cover"
-                          />
-                        ) : (
-                          <video
-                            src={modalOpenItem.src}
-                            controls
-                            className="w-full rounded-lg object-cover"
-                          />
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-medium mb-2">
-                          {modalOpenItem.caption}
-                        </h3>
-                        <p className="text-sm text-gray-700 leading-relaxed">
-                          {modalOpenItem.note}
-                        </p>
-                      </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium mb-2">
+                        {modalOpenItem.caption}
+                      </h3>
+                      <p className="text-sm text-gray-700 leading-relaxed">
+                        {modalOpenItem.note}
+                      </p>
                     </div>
                   </div>
                 </motion.div>
@@ -286,6 +357,7 @@ export default function ScrapbookPage() {
 /* ---------- ScrapCard ---------- */
 function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
   const isInlineOpen = inlineOpenId === item.id;
+
   const orientationClass =
     item.orientation === "vertical"
       ? "aspect-[3/4] w-[220px]"
@@ -293,6 +365,7 @@ function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
 
   const baseFrameCommon =
     "relative rounded-lg overflow-hidden flex flex-col items-stretch justify-start transition-transform shadow-lg";
+
   const frameStyle =
     item.frameType === 1
       ? `${baseFrameCommon} bg-gradient-to-br from-white/95 to-sky-50/60`
@@ -326,12 +399,28 @@ function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
             : onInlineToggle(item.id);
         }}
       >
+        {/* MEDIA RENDER HERE */}
         <div className={`flex-1 ${item.frameType === 2 ? "p-3" : "p-1"}`}>
           {item.type === "image" ? (
             <img
               src={item.src}
               alt={item.caption}
               className="w-full h-full object-cover rounded-sm"
+              draggable={false}
+            />
+          ) : /youtu|youtube|embed/.test(item.src) ? (
+            <iframe
+              src={item.src}
+              className="w-full h-full object-cover rounded-sm"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : item.src.endsWith(".mp4") ? (
+            <video
+              src={item.src}
+              className="w-full h-full object-cover"
+              muted
+              loop
             />
           ) : (
             <video
@@ -343,13 +432,14 @@ function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
           )}
         </div>
 
+        {/* FRAME TYPE 4 caption */}
         {item.frameType === 4 && (
           <div className="absolute bottom-0 left-0 right-0 text-center pb-3 pt-2">
             <div className="text-xs text-gray-600">{item.caption}</div>
           </div>
         )}
 
-        {/* Nút mở note */}
+        {/* Note button */}
         <div className="absolute top-3 right-3 flex items-center gap-2">
           {item.popupKind === "inline" ? (
             <button
@@ -358,7 +448,6 @@ function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
                 onInlineToggle(item.id);
               }}
               className="bg-white/95 text-gray-800 p-1 rounded-full shadow-sm border"
-              title="Open note"
             >
               <FileText className="w-4 h-4" />
             </button>
@@ -368,7 +457,7 @@ function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
                 e.stopPropagation();
                 onOpenModal(item);
               }}
-              className="bg-white/95 text-gray-800 px-2 py-1 rounded-md text-xs font-medium shadow-sm border"
+              className="bg-white/95 text-gray-800 px-2 py-1 rounded-md text-xs shadow-sm border"
             >
               {item.caption ?? "Preview"}
             </button>
