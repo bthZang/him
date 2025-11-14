@@ -84,7 +84,7 @@ export default function ScrapbookPage() {
     return [
       //anh Duy
       mapped?.[2] ?? {
-        id: 1,
+        id: 0,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?1`,
         caption: "Ảnh 1",
@@ -93,7 +93,7 @@ export default function ScrapbookPage() {
       },
       //Loc
       mapped?.[1] ?? {
-        id: 2,
+        id: 1,
         type: "video",
         src: DEMO_VIDEO,
         caption: "Demo video",
@@ -102,7 +102,7 @@ export default function ScrapbookPage() {
       },
       //Nang
       mapped?.[5] ?? {
-        id: 3,
+        id: 2,
         type: "video",
         src: DEMO_VIDEO,
         caption: "Demo video",
@@ -111,7 +111,7 @@ export default function ScrapbookPage() {
       },
       //Toan
       mapped?.[0] ?? {
-        id: 4,
+        id: 3,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?4`,
         caption: "Ảnh 4",
@@ -120,7 +120,7 @@ export default function ScrapbookPage() {
       },
       //Huu
       mapped?.[4] ?? {
-        id: 5,
+        id: 4,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?5`,
         caption: "Ảnh 5",
@@ -129,7 +129,7 @@ export default function ScrapbookPage() {
       },
       //Thuong
       mapped?.[3] ?? {
-        id: 6,
+        id: 5,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?6`,
         caption: "Ảnh 6",
@@ -138,34 +138,25 @@ export default function ScrapbookPage() {
       },
       //Khanh
       mapped?.[7] ?? {
-        id: 7,
+        id: 6,
         type: "video",
         src: DEMO_VIDEO,
         caption: "Demo video",
         note: "Video demo",
         popupKind: "inline",
       },
-      //Nang
-      mapped?.[5] ?? {
-        id: 8,
-        type: "image",
-        src: `${DEMO_PLACEHOLDER}?8`,
-        caption: "Ảnh 8",
-        note: "sample 8",
-        popupKind: "modal",
-      },
       //Nhu Khang
       mapped?.[8] ?? {
-        id: 8,
+        id: 7,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?8`,
-        caption: "Ảnh 8",
+        caption: "Bonus",
         note: "sample 8",
         popupKind: "modal",
       },
       //Zang
       mapped?.[6] ?? {
-        id: 10,
+        id: 8,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?10`,
         caption: "Ảnh 10",
