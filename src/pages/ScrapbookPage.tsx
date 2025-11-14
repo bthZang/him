@@ -83,7 +83,7 @@ export default function ScrapbookPage() {
 
   const ITEMS: ScrapItem[] = useMemo(() => {
     return [
-        //anh Duy
+      //anh Duy
       mapped?.[2] ?? {
         id: 1,
         type: "image",
@@ -119,7 +119,7 @@ export default function ScrapbookPage() {
         note: "sample 4",
         popupKind: "modal",
       },
-      //Thuong
+      //Huu
       mapped?.[4] ?? {
         id: 5,
         type: "image",
@@ -128,7 +128,7 @@ export default function ScrapbookPage() {
         note: "sample 5",
         popupKind: "inline",
       },
-      //Huu
+      //Thuong
       mapped?.[3] ?? {
         id: 6,
         type: "image",
@@ -153,14 +153,6 @@ export default function ScrapbookPage() {
         caption: "Ảnh 8",
         note: "sample 8",
         popupKind: "modal",
-      },
-      mapped?.[4] ?? {
-        id: 9,
-        type: "image",
-        src: `${DEMO_PLACEHOLDER}?9`,
-        caption: "Ảnh 9",
-        note: "sample 9",
-        popupKind: "inline",
       },
       //Zang
       mapped?.[6] ?? {
@@ -218,7 +210,6 @@ export default function ScrapbookPage() {
           <div className="relative mb-6 z-[9999]">
             <div
               className="absolute -top-[45px] left-1/2 -translate-x-1/2 flex flex-col items-center scale-50"
-              style={{ zIndex: 99999 }}
             >
               <div
                 className="w-3 h-5 rounded-full bg-gradient-to-t from-orange-500 via-amber-300 to-yellow-100 animate-flicker z-[90999]"
@@ -376,7 +367,7 @@ function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
       : "aspect-video w-[300px]";
 
   const baseFrameCommon =
-    "relative rounded-lg overflow-hidden flex flex-col items-stretch justify-start transition-transform shadow-lg";
+    "relative rounded-lg overflow-visible flex flex-col items-stretch justify-start transition-transform shadow-lg";
 
   const frameStyle =
     item.frameType === 1
@@ -426,19 +417,16 @@ function ScrapCard({ item, onInlineToggle, inlineOpenId, onOpenModal }: any) {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
-          ) : item.src.endsWith(".mp4") ? (
-            <video
-              src={item.src}
-              className="w-full h-full object-cover"
-              muted
-              loop
-            />
           ) : (
             <video
               src={item.src}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover relative"
               muted
-              loop
+              playsInline
+              controls
+              preload="metadata"
+              style={{ objectFit: "cover" }}
+              onClick={(e) => e.stopPropagation()}
             />
           )}
         </div>
