@@ -154,9 +154,18 @@ export default function ScrapbookDuyPage() {
         note: "sample 8",
         popupKind: "modal",
       },
+      //Truc
+      mapped?.[9] ?? {
+        id: 8,
+        type: "image",
+        src: `${DEMO_PLACEHOLDER}?6`,
+        caption: "Ảnh 6",
+        note: "sample 6",
+        popupKind: "modal",
+      },
       //Linh
       mapped?.[6] ?? {
-        id: 8,
+        id: 9,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?10`,
         caption: "Ảnh 10",
@@ -246,8 +255,8 @@ export default function ScrapbookDuyPage() {
             }}
             transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
           >
-            🎂 Happy Birthday to <span className="font-semibold">Đức Duy</span> —
-            22/12
+            🎂 Happy Birthday to <span className="font-semibold">Đức Duy</span>{" "}
+            — 22/12
           </motion.h1>
 
           <div className="text-sm text-white/80 mt-2 z-10">
