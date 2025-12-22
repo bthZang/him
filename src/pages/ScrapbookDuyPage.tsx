@@ -163,9 +163,18 @@ export default function ScrapbookDuyPage() {
         note: "sample 6",
         popupKind: "modal",
       },
+      //Kien
+      mapped?.[10] ?? {
+        id: 9,
+        type: "image",
+        src: `${DEMO_PLACEHOLDER}?6`,
+        caption: "Ảnh 6",
+        note: "sample 6",
+        popupKind: "modal",
+      },
       //Linh
       mapped?.[6] ?? {
-        id: 9,
+        id: 10,
         type: "image",
         src: `${DEMO_PLACEHOLDER}?10`,
         caption: "Ảnh 10",
