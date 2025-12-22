@@ -22,7 +22,12 @@ export const specialDays: SpecialDay[] = [
     date: createLocalDate(2025, 11, 15),
     label: "Birthday",
     path: "/special/scrapbook",
-    content: {
-    },
+    content: {},
+  },
+  {
+    date: createLocalDate(2025, 12, 22),
+    label: "Birthday",
+    path: "/special/scrapbook/ducduy",
+    content: {},
   },
 ];

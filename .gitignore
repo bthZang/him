@@ -25,6 +25,8 @@ dist-ssr
 
 .env
 messages.json
+duy.messages.json
+
 1.watch.json
 2.watch.json
 3.watch.json
